@@ -42,7 +42,23 @@ npm run build && npm run start
 Copy lives in typed dictionaries: `src/i18n/vi.ts` and `src/i18n/en.ts`. The type system rejects a
 dictionary whose keys differ from the other.
 
+## Motion
+
+Motion follows the owner's living-ui method: content first, then a static page, then small layers.
+
+- **Stamp** (`src/app/globals.css`): the headline's "Chuchube!" stamp presses down on load, then
+  the fake page in the illustration gets stamped. CSS transform only; off under reduced motion.
+- **Light effects** (`src/components/fx/`, adapted from living-ui-effects, MIT): hologram tilt on
+  the verified sheet, a glitch on the fake page's name, scramble on link labels. Pointer effects only
+  run on fine pointers; nothing runs under reduced motion.
+- **Video** (`src/components/video/`): poster first, idle warm-up, plays only on screen, never under
+  reduced motion.
+
 ## Video
 
 The loop in "How it works" is a HyperFrames project in `video/`. See `video/README.md` to re-render
-it; the encoded files live in `public/videos/`.
+it; the encoded files live in `public/videos/`. `video/` is listed in `.vercelignore`.
+
+## Docs
+
+- `docs/taglines.md`: alternative tagline options in both languages for the owner to choose from.
