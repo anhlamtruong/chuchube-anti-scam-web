@@ -1,0 +1,158 @@
+/* Adapted from living-ui-skills (living-ui-effects, MIT).
+   Light effects, themed for paper instead of the original dark blueprint.
+   Everything only moves transform / opacity / clip-path, so nothing here can
+   shift layout. Glitch copies multiply onto paper (screen would vanish on a
+   light ground). */
+
+:root {
+  --fx-accent: #e5482d; /* glitch layer A, scramble glyphs */
+  --fx-hot: #1f8fb5; /* glitch layer B: a cyan split against the red */
+  --fx-sheen-1: #3fb6a8; /* hologram edge, in order around the ring */
+  --fx-sheen-2: #6f8cff;
+  --fx-sheen-3: #b77cf2;
+  --fx-sheen-4: #f07aa8;
+  --fx-sheen-5: #f2b84b;
+  --fx-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+/* ------------------------------------------------------------------------ */
+/* 2. Hologram cards: injected overlay (glare + iridescent border sheen).     */
+/*    The card itself only gets an inline transform while hovered/settling.  */
+/* ------------------------------------------------------------------------ */
+
+.fx-holo-host.fx-holo-host {
+  /* The JS spring drives transform; a CSS transform transition would lag it.
+     Doubled class: beats a theme card rule such as .card { transition: transform } */
+  transition:
+    border-color 200ms ease,
+    box-shadow 360ms ease;
+  will-change: transform;
+  box-shadow: 0 28px 48px -30px rgba(22, 22, 26, 0.45);
+}
+.fx-holo-pos {
+  position: relative;
+}
+
+span.fx-holo {
+  position: absolute;
+  inset: -1px; /* sits on the card's own 1px border */
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  --fx-x: 50%;
+  --fx-y: 50%;
+  --fx-a: 0deg;
+  background:
+    radial-gradient(
+      circle at var(--fx-x) var(--fx-y),
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0.18) 24%,
+      transparent 58%
+    ),
+    linear-gradient(
+      calc(var(--fx-a) + 120deg),
+      transparent 22%,
+      color-mix(in srgb, var(--fx-sheen-1) 9%, transparent) 38%,
+      color-mix(in srgb, var(--fx-sheen-3) 10%, transparent) 50%,
+      color-mix(in srgb, var(--fx-sheen-4) 8%, transparent) 62%,
+      transparent 78%
+    );
+}
+/* overflow:hidden cards clip their border box: draw the ring just inside. */
+span.fx-holo.fx-holo--in {
+  inset: 0;
+}
+
+span.fx-holo::before,
+span.fx-holo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--fx-a) at var(--fx-x) var(--fx-y),
+    var(--fx-sheen-1),
+    var(--fx-sheen-2),
+    var(--fx-sheen-3),
+    var(--fx-sheen-4),
+    var(--fx-sheen-5),
+    var(--fx-sheen-1)
+  );
+}
+/* Whole ring, faint. */
+span.fx-holo::before {
+  opacity: 0.38;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+/* Ring near the pointer, bright. */
+span.fx-holo::after {
+  padding: 1.5px;
+  -webkit-mask:
+    radial-gradient(circle 190px at var(--fx-x) var(--fx-y), #000, transparent 72%),
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: source-in, xor;
+  mask:
+    radial-gradient(circle 190px at var(--fx-x) var(--fx-y), #000, transparent 72%),
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: intersect, exclude;
+}
+
+/* ------------------------------------------------------------------------ */
+/* 4b. Scramble text: the real text keeps its box (and stays the accessible  */
+/*     name); an aria-hidden overlay shows the decoding glyphs on top.        */
+/* ------------------------------------------------------------------------ */
+
+.fx-scr {
+  position: relative;
+  display: inline-block;
+}
+/* In a plain inline link the inline-block would drop the link's underline. */
+.fx-scr--inline {
+  text-decoration: inherit;
+}
+.fx-scr__fx {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  white-space: pre-wrap;
+  text-decoration: none;
+  pointer-events: none;
+  user-select: none;
+  /* clip sideways to the real text's width, never vertically */
+  clip-path: inset(-0.5em 0 -0.5em 0);
+}
+.fx-scr[data-on] > .fx-scr__txt {
+  color: transparent;
+}
+.fx-scr[data-on] > .fx-scr__fx {
+  visibility: visible;
+}
+.fx-scr__tail {
+  font-family: var(--fx-mono);
+  font-feature-settings: normal;
+  color: var(--fx-scr-tail, var(--fx-accent));
+}
+/* On filled buttons the accent can vanish: set --fx-scr-tail: currentColor on
+   the button, and add .fx-scr--quiet to the ScrambleText for a softer tail. */
+.fx-scr--quiet .fx-scr__tail {
+  opacity: 0.6;
+}
+
+@media print {
+  span.fx-holo,
+  .fx-glitch__copy,
+  .fx-scr__fx {
+    display: none !important;
+  }
+}
