@@ -19,7 +19,7 @@ export const en: Dictionary = {
     problem:
       "Every week, new fake fanpages impersonating well-known people pop up, luring followers into gambling and investment scams.",
     answer:
-      "Chuchube checks a suspicious page in seconds, points you to the official channel, and lets you block and report it on the spot.",
+      "Chuchube checks a suspicious page, points you to the official channel, and lets you block and report it on the spot.",
     cryMeaning:
       "“Chuchube!” means: you spotted a fake, so block and report it right away. It is also the name of the main button in the app.",
     primaryCta: "Businesses: get in touch",

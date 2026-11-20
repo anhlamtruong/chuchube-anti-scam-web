@@ -17,7 +17,7 @@ export const vi = {
     problem:
       "Tuần nào cũng có fanpage giả mạo người nổi tiếng mọc lên, dụ người theo dõi vào cờ bạc và lừa đảo đầu tư.",
     answer:
-      "Chuchube kiểm tra trang đáng ngờ trong vài giây, chỉ cho bạn kênh chính thức, rồi để bạn chặn và báo cáo ngay tại chỗ.",
+      "Chuchube kiểm tra trang đáng ngờ, chỉ cho bạn kênh chính thức, rồi để bạn chặn và báo cáo ngay tại chỗ.",
     cryMeaning:
       "“Chuchube!” nghĩa là: thấy giả thì chặn và báo cáo liền. Nút chính trong ứng dụng cũng mang tên này.",
     primaryCta: "Doanh nghiệp liên hệ",

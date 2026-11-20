@@ -18,5 +18,5 @@ word-for-word translations.
 1. **If it's fake, Chuchube it.** Turns the cry into a verb.
 2. **Doubt a page? Check it, then Chuchube!** Names the first step (check) before the cry.
 3. **Real page or fake? Ask Chuchube.** Leads with the question users actually ask.
-4. **One screenshot. Real or fake, in seconds.** The product promise without the cry; good as a subline.
+4. **One screenshot. Real or fake, with reasons.** The product promise without the cry; good as a subline.
 5. **Don't scroll past a fake. Chuchube!** Asks the reader not to scroll past a fake.
