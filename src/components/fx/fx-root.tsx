@@ -12,6 +12,7 @@ import { setupGlitch } from "./glitch";
 import { setupHolo } from "./holo";
 import { setupScramble } from "./scramble";
 import "./fx.css";
+import "./fx-glitch.css";
 
 const effects: ReadonlyArray<() => () => void> = [setupHolo, setupGlitch, setupScramble];
 

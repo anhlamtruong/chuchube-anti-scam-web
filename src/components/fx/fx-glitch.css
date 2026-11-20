@@ -1,0 +1,267 @@
+/* Adapted from living-ui-skills (living-ui-effects, MIT).
+   Glitch keyframes, split out of fx.css to keep files small. */
+
+/* ------------------------------------------------------------------------ */
+/* 4a. Glitch headings: two colored copies (client-rendered, aria-hidden)     */
+/*     sliced and shifted; the real heading only jitters. Toggled by          */
+/*     [data-glitch] on the wrapper; --fx-gi scales the offsets.              */
+/* ------------------------------------------------------------------------ */
+
+.fx-glitch {
+  position: relative;
+}
+.fx-glitch__copy {
+  position: absolute;
+  inset: 0;
+  display: block;
+  margin: 0;
+  visibility: hidden;
+  opacity: 0.9;
+  pointer-events: none;
+  user-select: none;
+  mix-blend-mode: multiply;
+}
+.fx-glitch__copy,
+.fx-glitch__copy * {
+  color: var(--fx-gc) !important;
+}
+.fx-glitch__copy--a {
+  --fx-gc: var(--fx-accent);
+}
+.fx-glitch__copy--b {
+  --fx-gc: var(--fx-hot);
+}
+
+.fx-glitch[data-glitch] .fx-glitch__base,
+.fx-glitch[data-glitch] .fx-glitch__copy {
+  animation-timing-function: steps(1, end);
+  animation-fill-mode: both;
+}
+.fx-glitch[data-glitch="in"] .fx-glitch__base {
+  animation-name: fx-gl-base;
+  animation-duration: 560ms;
+}
+.fx-glitch[data-glitch="in"] .fx-glitch__copy--a {
+  animation-name: fx-gl-a;
+  animation-duration: 560ms;
+}
+.fx-glitch[data-glitch="in"] .fx-glitch__copy--b {
+  animation-name: fx-gl-b;
+  animation-duration: 560ms;
+}
+.fx-glitch[data-glitch="m1"] .fx-glitch__base,
+.fx-glitch[data-glitch="m2"] .fx-glitch__base {
+  animation-name: fx-gl-mbase;
+  animation-duration: 260ms;
+}
+.fx-glitch[data-glitch="m1"] .fx-glitch__copy--a,
+.fx-glitch[data-glitch="m2"] .fx-glitch__copy--b {
+  animation-name: fx-gl-m1;
+  animation-duration: 260ms;
+}
+.fx-glitch[data-glitch="m1"] .fx-glitch__copy--b,
+.fx-glitch[data-glitch="m2"] .fx-glitch__copy--a {
+  animation-name: fx-gl-m2;
+  animation-duration: 260ms;
+}
+
+@keyframes fx-gl-base {
+  0% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 2px), 0, 0);
+    text-shadow:
+      calc(var(--fx-gi, 1) * -2px) 0 color-mix(in srgb, var(--fx-hot) 55%, transparent),
+      calc(var(--fx-gi, 1) * 2px) 0 color-mix(in srgb, var(--fx-accent) 55%, transparent);
+  }
+  12% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -3px), 0, 0) skewX(calc(var(--fx-gi, 1) * -5deg));
+  }
+  20% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 1px), 0, 0);
+    clip-path: inset(0 0 46% 0);
+  }
+  27% {
+    transform: none;
+    clip-path: inset(0 0 0 0);
+  }
+  46% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -1px), 0, 0);
+    text-shadow:
+      calc(var(--fx-gi, 1) * -1px) 0 color-mix(in srgb, var(--fx-hot) 40%, transparent),
+      calc(var(--fx-gi, 1) * 1px) 0 color-mix(in srgb, var(--fx-accent) 40%, transparent);
+  }
+  68% {
+    transform: none;
+  }
+  100% {
+    transform: none;
+    clip-path: none;
+    text-shadow: none;
+  }
+}
+
+@keyframes fx-gl-a {
+  0% {
+    visibility: visible;
+    transform: translate3d(calc(var(--fx-gi, 1) * -7px), 0, 0);
+    clip-path: inset(6% 0 70% 0);
+  }
+  9% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 5px), 0, 0);
+    clip-path: inset(44% 0 34% 0);
+  }
+  18% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -3px), 0, 0);
+    clip-path: inset(72% 0 8% 0);
+  }
+  27% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 8px), 0, 0);
+    clip-path: inset(20% 0 58% 0);
+  }
+  38% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -4px), 0, 0);
+    clip-path: inset(0 0 82% 0);
+  }
+  50% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 3px), 0, 0);
+    clip-path: inset(58% 0 22% 0);
+  }
+  62% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -2px), 0, 0);
+    clip-path: inset(30% 0 46% 0);
+  }
+  76% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -1.5px), 0, 0);
+    clip-path: inset(0 0 0 0);
+    opacity: 0.4;
+  }
+  90% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -0.75px), 0, 0);
+    opacity: 0.22;
+  }
+  100% {
+    visibility: hidden;
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+}
+
+@keyframes fx-gl-b {
+  0% {
+    visibility: visible;
+    transform: translate3d(calc(var(--fx-gi, 1) * 6px), 0, 0);
+    clip-path: inset(62% 0 14% 0);
+  }
+  9% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -6px), 0, 0);
+    clip-path: inset(12% 0 66% 0);
+  }
+  18% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 4px), 0, 0);
+    clip-path: inset(36% 0 40% 0);
+  }
+  27% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -8px), 0, 0);
+    clip-path: inset(80% 0 0 0);
+  }
+  38% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 5px), 0, 0);
+    clip-path: inset(48% 0 30% 0);
+  }
+  50% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -3px), 0, 0);
+    clip-path: inset(4% 0 76% 0);
+  }
+  62% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 2px), 0, 0);
+    clip-path: inset(66% 0 12% 0);
+  }
+  76% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 1.5px), 0, 0);
+    clip-path: inset(0 0 0 0);
+    opacity: 0.4;
+  }
+  90% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 0.75px), 0, 0);
+    opacity: 0.22;
+  }
+  100% {
+    visibility: hidden;
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+}
+
+@keyframes fx-gl-mbase {
+  0% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 1.5px), 0, 0);
+    text-shadow:
+      calc(var(--fx-gi, 1) * -1.5px) 0 color-mix(in srgb, var(--fx-hot) 45%, transparent),
+      calc(var(--fx-gi, 1) * 1.5px) 0 color-mix(in srgb, var(--fx-accent) 45%, transparent);
+  }
+  30% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -1px), 0, 0);
+  }
+  60% {
+    transform: none;
+  }
+  100% {
+    transform: none;
+    text-shadow: none;
+  }
+}
+
+@keyframes fx-gl-m1 {
+  0% {
+    visibility: visible;
+    transform: translate3d(calc(var(--fx-gi, 1) * -6px), 0, 0);
+    clip-path: inset(18% 0 64% 0);
+  }
+  25% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 4px), 0, 0);
+    clip-path: inset(56% 0 26% 0);
+  }
+  50% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -2px), 0, 0);
+    clip-path: inset(34% 0 52% 0);
+  }
+  75% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 1px), 0, 0);
+    clip-path: inset(0 0 0 0);
+    opacity: 0.3;
+  }
+  100% {
+    visibility: hidden;
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+}
+
+@keyframes fx-gl-m2 {
+  0% {
+    visibility: visible;
+    transform: translate3d(calc(var(--fx-gi, 1) * 5px), 0, 0);
+    clip-path: inset(70% 0 10% 0);
+  }
+  25% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -5px), 0, 0);
+    clip-path: inset(8% 0 74% 0);
+  }
+  50% {
+    transform: translate3d(calc(var(--fx-gi, 1) * 3px), 0, 0);
+    clip-path: inset(46% 0 36% 0);
+  }
+  75% {
+    transform: translate3d(calc(var(--fx-gi, 1) * -1px), 0, 0);
+    clip-path: inset(0 0 0 0);
+    opacity: 0.3;
+  }
+  100% {
+    visibility: hidden;
+    transform: none;
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+}
